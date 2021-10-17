@@ -928,42 +928,75 @@ YY_RULE_SETUP
                 {
                     ListaNumericos = initList(yytext);
                     strcpy(ListaNumericos->tipo,"entero");
+                    printf("(6,%d)",ListaNumericos->posicion);
                 }
             }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 138 "proyecto.l"
-{printf("se recibió clase 7\n");}
+#line 139 "proyecto.l"
+{
+                if(ListaNumericos != NULL)
+                {
+                    ListaNumericos = crearNodo(yytext,ListaNumericos);
+                    strcpy(ListaNumericos->tipo,"real");
+                    printf("%s",ListaNumericos->tipo);
+                    printf("(7,%d)",ListaNumericos->posicion);
+                }
+                else
+                {
+                    ListaNumericos = initList(yytext);
+                    strcpy(ListaNumericos->tipo,"real");
+                    printf("%s",ListaNumericos->tipo);
+                    printf("(7,%d)",ListaNumericos->posicion);
+                }
+            }
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 139 "proyecto.l"
-{printf("se recibió clase 8\n");}
+#line 155 "proyecto.l"
+{
+                if(ListaCadenas != NULL)
+                {
+                    ListaCadenas = crearNodo(yytext,ListaCadenas);
+                    strcpy(ListaCadenas->tipo,"cadena");
+                    printf("%s",ListaCadenas->tipo);
+                    printf("(8,%d)",ListaCadenas->posicion);
+                }
+                else
+                {
+                    ListaCadenas = initList(yytext);
+                    strcpy(ListaCadenas->tipo,"cadena");
+                    printf("%s",ListaCadenas->tipo);
+                    printf("(8,%d)",ListaCadenas->posicion);
+                }
+            }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 140 "proyecto.l"
-{printf("se recibió clase 9\n");}
+#line 171 "proyecto.l"
+{
+                printf("(9,%c)",yytext[1]);
+            }
 	YY_BREAK
 case 11:
 /* rule 11 can match eol */
 YY_RULE_SETUP
-#line 141 "proyecto.l"
+#line 174 "proyecto.l"
 {}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 142 "proyecto.l"
+#line 175 "proyecto.l"
 {printf("error léxico\n");}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 143 "proyecto.l"
+#line 176 "proyecto.l"
 ECHO;
 	YY_BREAK
-#line 967 "lex.yy.c"
+#line 1000 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1968,7 +2001,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 143 "proyecto.l"
+#line 176 "proyecto.l"
 
 int main( )
 {

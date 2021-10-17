@@ -133,6 +133,7 @@ class9 '.'
                 {
                     ListaNumericos = initList(yytext);
                     strcpy(ListaNumericos->tipo,"entero");
+                    printf("(6,%d)",ListaNumericos->posicion);
                 }
             }
 {class7}    {
@@ -147,10 +148,29 @@ class9 '.'
                 {
                     ListaNumericos = initList(yytext);
                     strcpy(ListaNumericos->tipo,"real");
+                    printf("%s",ListaNumericos->tipo);
+                    printf("(7,%d)",ListaNumericos->posicion);
                 }
             }
-{class8}    {printf("se recibió clase 8\n");}
-{class9}    {printf("se recibió clase 9\n");}
+{class8}    {
+                if(ListaCadenas != NULL)
+                {
+                    ListaCadenas = crearNodo(yytext,ListaCadenas);
+                    strcpy(ListaCadenas->tipo,"cadena");
+                    printf("%s",ListaCadenas->tipo);
+                    printf("(8,%d)",ListaCadenas->posicion);
+                }
+                else
+                {
+                    ListaCadenas = initList(yytext);
+                    strcpy(ListaCadenas->tipo,"cadena");
+                    printf("%s",ListaCadenas->tipo);
+                    printf("(8,%d)",ListaCadenas->posicion);
+                }
+            }
+{class9}    {
+                printf("(9,%c)",yytext[1]);
+            }
 {delim}     {}
 .           {printf("error léxico\n");}
 %%
