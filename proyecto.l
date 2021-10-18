@@ -201,6 +201,7 @@ newline \n
                 if (errores == NULL)
                 {
                     errores = fopen("Errores","w");
+                    fprintf(errores,"Lista de errores");
                 }
                 if(banderaErrSyn == 0)
                 {

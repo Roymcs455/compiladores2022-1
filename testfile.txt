@@ -7,3 +7,4 @@ cadena caracter else entero for if real return void while
 2.67 .85 31. .
 "" "hola" "wasd%$5"
 ' ' 'a' '$'
+wajsdlasldasdjlasjdlasjldas
