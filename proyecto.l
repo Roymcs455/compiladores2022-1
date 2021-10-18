@@ -234,12 +234,15 @@ main( int argc, char** argv )
     yylex();
 
     /*Se llena el archivo contenedor de la tabla de símbolos*/
-    printToFile(lIdent,tablaSimbolos);
+    if(lIdent != NULL)
+        printToFile(lIdent,tablaSimbolos);
 
     /*Se llena el archivo contenedor la tabla de literales con los literales tipo cadena*/
-    printToFile(lString,tablaLiterales);
+    if(lString != NULL)
+        printToFile(lString,tablaLiterales);
     /*Se llena el archivo contenedor de la tabla de literales con los literales tipo numérico*/
-    printToFile(lNum,tablaLiterales);
+    if(lNum != NULL)
+        printToFile(lNum,tablaLiterales);
 
     /*Se cierran los 3 archivos con las tablas y los tokens, finaliza la ejecución del compilador*/
     close(tokens);
