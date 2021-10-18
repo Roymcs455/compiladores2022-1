@@ -1,0 +1,9 @@
+cadena caracter else entero for if real return void while
++ - * / $
+~ +~ -~ *~ /~ $~
+( ) { } [ ] & , :
+^^ ^" == ^^= ^"= <>
+-56+ +46 56- 41 72+a_
+2.67 .85 31. .
+"" "hola" "wasd%$5"
+' ' 'a' '$'

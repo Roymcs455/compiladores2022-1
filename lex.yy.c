@@ -514,6 +514,9 @@ char *yytext;
 #include <stdio.h>
 #include <string.h>
 #include "linked.h"
+
+FILE  *outputFile;
+
 char p_reservadas[10][10] = { 
     "cadena",
     "caracter",
@@ -549,7 +552,7 @@ Nodo *ListaCadenas;
 Nodo *ListaIdentificadores;
 
 
-#line 553 "lex.yy.c"
+#line 556 "lex.yy.c"
 /**/
 /*palabras reservadas*/
 /*operadores aritmeticos + - * / $ */
@@ -560,7 +563,7 @@ Nodo *ListaIdentificadores;
 /*constantes numéricas enteras*/
 /*constantes numéricas reales*/
 /*constantes cadenas*/
-#line 564 "lex.yy.c"
+#line 567 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -777,9 +780,9 @@ YY_DECL
 		}
 
 	{
-#line 70 "proyecto.l"
+#line 73 "proyecto.l"
 
-#line 783 "lex.yy.c"
+#line 786 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -838,36 +841,36 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 71 "proyecto.l"
+#line 74 "proyecto.l"
 {//printf("Se recibió clase 0\n");
                 for(int i = 0; i<10; i++)
                 {
                     if (strcmp(p_reservadas[i],yytext) == 0 )
                     {
-                        printf("(0,%d)",i);
+                        fprintf(outputFile,"(0,%d)",i);
                     }
                 }
             }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 80 "proyecto.l"
+#line 83 "proyecto.l"
 {//printf("Se recibió clase 1\n");
-            printf("(1,%s)",yytext);    
+            fprintf(outputFile,"(1,%s)",yytext);    
         }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 83 "proyecto.l"
+#line 86 "proyecto.l"
 {for(int i = 0; i<5; i++)
                 {
                     if(strcmp(op_asig[i],yytext)==0)
                     {
-                        printf("(2,%d)",i);
+                        fprintf(outputFile,"(2,%d)",i);
                     }
                     if (yytext[0]==36 && yytext[1] == '~')
                     {
-                        printf("(2,5)");
+                        fprintf(outputFile,"(2,5)");
                         break;
                     }
                 }
@@ -875,23 +878,23 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 96 "proyecto.l"
-{printf("(3,%s)",yytext);}
+#line 99 "proyecto.l"
+{fprintf(outputFile,"(3,%s)",yytext);}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 97 "proyecto.l"
+#line 100 "proyecto.l"
 {for(int i = 0; i<10; i++)
                 {
                     if (strcmp(op_rel[i],yytext) == 0 )
                     {
-                        printf("(4,%d)",i);
+                        fprintf(outputFile,"(4,%d)",i);
                     }
                 }}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 104 "proyecto.l"
+#line 107 "proyecto.l"
 {   
                 if(ListaIdentificadores != NULL)
                 {
@@ -899,104 +902,104 @@ YY_RULE_SETUP
                     if(index == -1)
                     {
                         ListaIdentificadores = crearNodo(yytext,ListaIdentificadores);
-                        printf("(5,%d)",ListaIdentificadores->posicion);
+                        fprintf(outputFile,"(5,%d)",ListaIdentificadores->posicion);
                     }
                     else
                     {
-                        printf("(5,%d)",index);
+                        fprintf(outputFile,"(5,%d)",index);
                     }
                 }
                 else
                 {
                     ListaIdentificadores = initList(yytext);
-                    printf("(5,0)");
+                    fprintf(outputFile,"(5,0)");
                 }
             }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 124 "proyecto.l"
+#line 127 "proyecto.l"
 {
                 if(ListaNumericos != NULL)
                 {
                     ListaNumericos = crearNodo(yytext,ListaNumericos);
                     strcpy(ListaNumericos->tipo,"entero");
-                    printf("%s",ListaNumericos->tipo);
-                    printf("(6,%d)",ListaNumericos->posicion);
+                    fprintf(outputFile,"%s",ListaNumericos->tipo);
+                    fprintf(outputFile,"(6,%d)",ListaNumericos->posicion);
                 }
                 else
                 {
                     ListaNumericos = initList(yytext);
                     strcpy(ListaNumericos->tipo,"entero");
-                    printf("(6,%d)",ListaNumericos->posicion);
+                    fprintf(outputFile,"(6,%d)",ListaNumericos->posicion);
                 }
             }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 139 "proyecto.l"
+#line 142 "proyecto.l"
 {
                 if(ListaNumericos != NULL)
                 {
                     ListaNumericos = crearNodo(yytext,ListaNumericos);
                     strcpy(ListaNumericos->tipo,"real");
-                    printf("%s",ListaNumericos->tipo);
-                    printf("(7,%d)",ListaNumericos->posicion);
+                    fprintf(outputFile,"%s",ListaNumericos->tipo);
+                    fprintf(outputFile,"(7,%d)",ListaNumericos->posicion);
                 }
                 else
                 {
                     ListaNumericos = initList(yytext);
                     strcpy(ListaNumericos->tipo,"real");
-                    printf("%s",ListaNumericos->tipo);
-                    printf("(7,%d)",ListaNumericos->posicion);
+                    fprintf(outputFile,"%s",ListaNumericos->tipo);
+                    fprintf(outputFile,"(7,%d)",ListaNumericos->posicion);
                 }
             }
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 155 "proyecto.l"
+#line 158 "proyecto.l"
 {
                 if(ListaCadenas != NULL)
                 {
                     ListaCadenas = crearNodo(yytext,ListaCadenas);
                     strcpy(ListaCadenas->tipo,"cadena");
-                    printf("%s",ListaCadenas->tipo);
-                    printf("(8,%d)",ListaCadenas->posicion);
+                    fprintf(outputFile,"%s",ListaCadenas->tipo);
+                    fprintf(outputFile,"(8,%d)",ListaCadenas->posicion);
                 }
                 else
                 {
                     ListaCadenas = initList(yytext);
                     strcpy(ListaCadenas->tipo,"cadena");
-                    printf("%s",ListaCadenas->tipo);
-                    printf("(8,%d)",ListaCadenas->posicion);
+                    //fprintf(outputFile,"%s",ListaCadenas->tipo);
+                    fprintf(outputFile,"(8,%d)",ListaCadenas->posicion);
                 }
             }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 171 "proyecto.l"
+#line 174 "proyecto.l"
 {
-                printf("(9,%c)",yytext[1]);
+                fprintf(outputFile,"(9,%c)",yytext[1]);
             }
 	YY_BREAK
 case 11:
 /* rule 11 can match eol */
 YY_RULE_SETUP
-#line 174 "proyecto.l"
+#line 177 "proyecto.l"
 {}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 175 "proyecto.l"
-{printf("error léxico\n");}
+#line 178 "proyecto.l"
+{printf("error léxico: !! %s !!\n",yytext);}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 176 "proyecto.l"
+#line 179 "proyecto.l"
 ECHO;
 	YY_BREAK
-#line 1000 "lex.yy.c"
+#line 1003 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2001,10 +2004,12 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 176 "proyecto.l"
+#line 179 "proyecto.l"
 
-int main( )
+main( int argc, char** argv )
 {
+    yyin = fopen(argv[1], "r");
+    outputFile = fopen(argv[2],"w");
     yylex();
-    return 0;
+    close(outputFile);
 }
