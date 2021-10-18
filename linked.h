@@ -8,6 +8,7 @@ V1.3 17 octubre 2021*/
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+/*estructura que sirve para hacer una lista doblemente ligada simple*/
 typedef struct nNodo{
     char* dato;
     int posicion;
@@ -15,6 +16,7 @@ typedef struct nNodo{
     struct nNodo *next;
     struct nNodo *past;
 }Nodo;
+/*Esta función sirve para inicializar la lista, */
 Nodo *initList(char *dato);
 Nodo *crearNodo(char *dato,Nodo *lista);
 void printList(Nodo *lista);
