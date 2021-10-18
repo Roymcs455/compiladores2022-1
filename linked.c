@@ -1,18 +1,17 @@
 #include "linked.h"
 
-
+/*este main sirvió para hacele debug a la librería linked.h*/
 // void main()
 // {
+//     FILE *output = fopen("abduscan","w");
 //     Nodo *Lista = initList("Hola");
 //     char* apuntador = "Hello";
 //     Lista = crearNodo(apuntador,Lista);
-//     printList(Lista);
-//     apuntador = "bye";
-//     printList(Lista);
+//     apuntador = "bye";    
 //     Lista = crearNodo(apuntador,Lista);
-//     printList(Lista);
+//     printToFile(Lista,output);
+//     close(output);
 // }
-
 Nodo *initList(char *dato)
 {
     Nodo *ptr = malloc(sizeof(Nodo));
@@ -24,9 +23,11 @@ Nodo *initList(char *dato)
     }
     strcpy(ptr->dato,dato);
     ptr->next = NULL;
+    ptr->past = NULL;
     ptr->posicion = 0;
     return ptr;
 }
+/*Mete un nodo a la lista, llenandolo con un string*/
 Nodo *crearNodo(char *dato,Nodo *lista)
 {
     Nodo *ptr = malloc(sizeof(Nodo));
@@ -39,10 +40,12 @@ Nodo *crearNodo(char *dato,Nodo *lista)
     }
     strcpy(ptr->dato,dato);
     ptr->next = lista;
+    lista->past = ptr;
     lista = ptr;
     
     return ptr;
 }
+/*Imprime la lista en consola desde el último nodo agregado hasta el primero */
 void printList(Nodo *lista)
 {
     Nodo *pointer = lista;
@@ -66,4 +69,18 @@ int searchList(char *dato,Nodo *lista)
         pointer = pointer->next;
     }
     return -1;
+}
+void printToFile(Nodo *lista, FILE* salida)
+{
+    Nodo *ptr = lista;
+    while(ptr->next != NULL)
+    {
+        ptr=ptr->next;
+    }
+    while(ptr != NULL)
+    {    
+        fprintf(salida,"%d  %s\n",ptr->posicion,ptr->dato);
+        ptr =ptr->past;
+    }
+
 }
