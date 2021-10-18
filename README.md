@@ -1,4 +1,5 @@
 # compiladores2022-1
+Sirve con flex version 2.6.4
 Programa realizado por Rodrigo Macías Eljure, para la clase de compiladores de la profesora Laura Sandoval Montaño, de la Facultad de Ingeniería de la UNAM.
 Para compilar el programa simplemente usar el script run.sh
 Para hacer el análisis léxico con este programa usar ./compilar Nombre_archivo 
