@@ -4,17 +4,21 @@
 /*léxicos pertenecientes a las clases descritas en el documento que detalla los requerimientos.*/
 %{
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "linked.h"
 
-FILE  *tokens;
-FILE  *tablaSimbolos;
-FILE  *tablaLiterales;  
-FILE  *errores;
+FILE  *tokens = NULL;
+FILE  *tablaSimbolos=NULL;
+FILE  *tablaLiterales=NULL;  
+FILE  *errores=NULL;
 
-Nodo *lNum;
-Nodo *lString;
-Nodo *lIdent;
+int num_atomos = 3;
+char *atomos =NULL;
+
+Nodo *lNum=NULL;
+Nodo *lString=NULL;
+Nodo *lIdent=NULL;
 int linea = 1;
 int banderaErrSyn = 0;
 
@@ -82,6 +86,13 @@ class9 '.'
 newline \n
 %%
 {class0}    {
+                num_atomos++;
+                atomos = realloc(atomos,num_atomos);
+                if(atomos == NULL)
+                {
+                    printf("No se pudo modificar el tamaño de atomos\n");
+                    return -1;
+                }
                 banderaErrSyn = 0;
                 //printf("Se recibió clase 0\n");
                 for(int i = 0; i<10; i++)
@@ -89,24 +100,99 @@ newline \n
                     if (strcmp(p_reservadas[i],yytext) == 0 )
                     {
                         fprintf(tokens,"(0,%d)\n",i);
+                        
+                        switch (i)
+                        {
+                            case 0:
+                                strcat(atomos,"h");
+                            break;
+                            case 1:
+                                strcat(atomos,"g");
+                            break;
+                            case 2:
+                                strcat(atomos,"e");
+                            break;
+                            case 3:
+                                strcat(atomos,"n");
+                            break;
+                            case 4:
+                                strcat(atomos,"f");
+                            break;
+                            case 5:
+                                strcat(atomos,"i");
+                            break;
+                            case 6:
+                                strcat(atomos,"d");
+                            break;
+                            case 7:
+                                strcat(atomos,"b");
+                            break;
+                            case 8:
+                                strcat(atomos,"v");
+                            break;
+                            case 9:
+                                strcat(atomos,"w");
+                            break;
+                            default:
+                                
+                            break;
+                        }
+
+                        break;
                     }
                 }
             }
 {class1} {
             banderaErrSyn = 0;
             fprintf(tokens,"(1,%s)\n",yytext);    
+            num_atomos++;
+            atomos = realloc(atomos,num_atomos);
+            if(atomos == NULL)
+            {
+                printf("No se pudo modificar el tamaño de atomos\n");
+                return -1;
+            }
+            strcat(atomos,yytext);
         }
 {class2}    {
                 banderaErrSyn = 0;
+                num_atomos++;
+                atomos = realloc(atomos,num_atomos);
+                if(atomos == NULL)
+                {
+                    printf("No se pudo modificar el tamaño de atomos\n");
+                    return -1;
+                }
                 for(int i = 0; i<5; i++)
                 {
                     if(strcmp(op_asig[i],yytext)==0)
                     {
                         fprintf(tokens,"(2,%d)\n",i);
+                        switch(i)
+                        {
+                            case 0:
+                                strcat(atomos,"=");
+                            break;
+                            case 1:
+                                strcat(atomos,"m");
+                            break;
+                            case 2:
+                                strcat(atomos,"k");
+                            break;
+                            case 3:
+                                strcat(atomos,"p");
+                            break;
+                            case 4:
+                                strcat(atomos,"t");
+                            break;
+                            default:
+                            break;
+                        }
                     }
                     if (yytext[0]==36 && yytext[1] == '~')
                     {
                         fprintf(tokens,"(2,5)\n");
+                        strcat(atomos,"u");
                         break;
                     }
                 }
@@ -114,16 +200,63 @@ newline \n
 {class3}    {
                 banderaErrSyn = 0;
                 fprintf(tokens,"(3,%s)\n",yytext);
+                num_atomos++;
+                atomos = realloc(atomos,num_atomos);
+                if(atomos == NULL)
+                {
+                    printf("No se pudo modificar el tamaño de atomos\n");
+                    return -1;
+                }
+                strcat(atomos,yytext);
             }
 {class4}    {banderaErrSyn = 0;
+                num_atomos++;
+                atomos = realloc(atomos,num_atomos);
+                if(atomos == NULL)
+                {
+                    printf("No se pudo modificar el tamaño de atomos\n");
+                    return -1;
+                }
                 for(int i = 0; i<10; i++)
                 {
                     if (strcmp(op_rel[i],yytext) == 0 )
                     {
                         fprintf(tokens,"(4,%d)\n",i);
+                        switch(i)
+                        {
+                            case 0:
+                                strcat(atomos,">");
+                            break;
+                            case 1:
+                                strcat(atomos,"<");
+                            break;
+                            case 2:
+                                strcat(atomos,"?");
+                            break;
+                            case 3:
+                                strcat(atomos,"y");
+                            break;
+                            case 4:
+                                strcat(atomos,"|");
+                            break;
+                            case 5:
+                                strcat(atomos,"¿");
+                            break;
+                            default:
+                            break;
+                        }
+                        break;
                     }
                 }}
 {class5}    {   
+                num_atomos++;
+                atomos = realloc(atomos,num_atomos);
+                if(atomos == NULL)
+                {
+                    printf("No se pudo modificar el tamaño de atomos\n");
+                    return -1;
+                }
+                strcat(atomos,"a");
                 banderaErrSyn = 0;
                 if(lIdent != NULL)
                 {
@@ -145,6 +278,14 @@ newline \n
                 }
             }
 {class6}    {
+                num_atomos++;
+                atomos = realloc(atomos,num_atomos);
+                if(atomos == NULL)
+                {
+                    printf("No se pudo modificar el tamaño de atomos\n");
+                    return -1;
+                }
+                strcat(atomos,"z");
                 banderaErrSyn = 0;
                 if(lNum != NULL)
                 {
@@ -161,6 +302,14 @@ newline \n
                 }
             }
 {class7}    {
+                num_atomos++;
+                atomos = realloc(atomos,num_atomos);
+                if(atomos == NULL)
+                {
+                    printf("No se pudo modificar el tamaño de atomos\n");
+                    return -1;
+                }
+                strcat(atomos,"r");
                 banderaErrSyn = 0;
                 if(lNum != NULL)
                 {
@@ -177,6 +326,14 @@ newline \n
                 }
             }
 {class8}    {
+                num_atomos++;
+                atomos = realloc(atomos,num_atomos);
+                if(atomos == NULL)
+                {
+                    printf("No se pudo modificar el tamaño de atomos\n");
+                    return -1;
+                }
+                strcat(atomos,"s");
                 banderaErrSyn = 0;
                 if(lString != NULL)
                 {
@@ -192,6 +349,14 @@ newline \n
                 }
             }
 {class9}    {
+                num_atomos++;
+                atomos = realloc(atomos,num_atomos);
+                if(atomos == NULL)
+                {
+                    printf("No se pudo modificar el tamaño de atomos\n");
+                    return -1;
+                }
+                strcat(atomos,"c");
                 banderaErrSyn = 0;   
                 fprintf(tokens,"(9,%c)\n",yytext[1]);
             }
@@ -215,6 +380,7 @@ newline \n
 %%
 main( int argc, char** argv )
 {
+    atomos = malloc(num_atomos);
     /*Definiendo la entrada del programa*/
     yyin = fopen(argv[1], "r");
     
@@ -250,4 +416,5 @@ main( int argc, char** argv )
     close(tablaLiterales);
 
     close(errores);
+    printf("\natomos: %s\nnum_atomos: %d\n",atomos,num_atomos);
 }
