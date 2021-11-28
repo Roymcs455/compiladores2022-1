@@ -1,6 +1,7 @@
 #ifndef NOTERM_H
 #define NOTERM_H
 /*Este archivo sirve para definir las funciones correspondientes a las producciones*/
+int curPos;//variable int para localizar el caracter que está siendo analizado.
 void Programa(char arreglo[]);
 void ListaD(char arreglo[]);
 void SerieF(char arreglo[]);
@@ -32,6 +33,6 @@ void SP(char arreglo[]);
 void otraS(char arreglo[]);
 void Func(char arreglo[]);
 void TipoFunc(char arreglo[]);
-
+void Error();
 
 #endif
