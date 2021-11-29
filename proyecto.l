@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "linked.h"
-
+#include "noterm.h"
 FILE  *tokens = NULL;
 FILE  *tablaSimbolos=NULL;
 FILE  *tablaLiterales=NULL;  
@@ -398,6 +398,7 @@ main( int argc, char** argv )
     
     /*Se realiza el análisis léxico del archivo de entrada */
     yylex();
+    num_atomos-=3;
 
     /*Se llena el archivo contenedor de la tabla de símbolos*/
     if(lIdent != NULL)
@@ -417,4 +418,5 @@ main( int argc, char** argv )
 
     close(errores);
     printf("\natomos: %s\nnum_atomos: %d\n",atomos,num_atomos);
+    Programa(atomos);
 }

@@ -1,4 +1,4 @@
-entero a1x_~10, b2Y7_:
+entero a1x_~10, b2Y7_~8:
 cadena str_~"cadena1":
 real X_,Y_~3.72:
 caracter c1_~'d', c2_:
